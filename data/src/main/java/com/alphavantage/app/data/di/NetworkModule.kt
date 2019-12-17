@@ -5,6 +5,7 @@ import android.os.Looper
 import com.alphavantage.app.data.BuildConfig
 import com.alphavantage.app.data.remote.ApiConstants
 import com.alphavantage.app.domain.util.NetworkUtils
+import com.andre.apikeys.KeyStore
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
@@ -46,7 +47,7 @@ fun provideHttpClient(context: Context, cache: Cache): OkHttpClient {
             val url = when (request.url.host) {
                 "www.alphavantage.co" -> request.url.newBuilder().addQueryParameter(
                     "apikey",
-                    "FS0FJ420A52OG88R"
+                    KeyStore.getApiKey()
                 ).build()
                 else -> request.url.newBuilder().build()
             }

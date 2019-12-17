@@ -86,4 +86,5 @@ dependencies {
     //// END
 
     implementation project(path: ':domain')
+    implementation project(path: ':apikeys')
 }
