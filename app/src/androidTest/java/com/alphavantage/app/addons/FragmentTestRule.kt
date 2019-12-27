@@ -1,4 +1,4 @@
-package com.alphavantage.app.rules
+package com.alphavantage.app.addons
 
 import android.content.Intent
 import androidx.fragment.app.Fragment
