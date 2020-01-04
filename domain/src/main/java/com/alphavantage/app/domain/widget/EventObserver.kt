@@ -1,4 +1,4 @@
-package com.alphavantage.app.ui.common
+package com.alphavantage.app.domain.widget
 
 import androidx.lifecycle.Observer
 

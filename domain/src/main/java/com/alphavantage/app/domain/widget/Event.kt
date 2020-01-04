@@ -1,4 +1,4 @@
-package com.alphavantage.app.ui.common
+package com.alphavantage.app.domain.widget
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

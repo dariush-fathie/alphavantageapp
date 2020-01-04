@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.alphavantage.app.R
 import com.alphavantage.app.databinding.CurrenciesFragmentBinding
 import com.alphavantage.app.domain.model.Result
+import com.alphavantage.app.domain.widget.EventObserver
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -49,7 +50,7 @@ class CurrenciesFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         viewModel.toPrevious.observe(viewLifecycleOwner,
-            Observer {
+            EventObserver {
                 navController?.popBackStack()
             })
 
@@ -71,13 +72,31 @@ class CurrenciesFragment : Fragment() {
         binding.rvCurrencies.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner,
-            Observer { result ->
+            EventObserver { result ->
                 // TODO loading
-                when(result.status) {
+                when (result.status) {
+                    Result.Status.LOADING -> {
+                        binding.statusView.visibility = View.VISIBLE
+                        binding.rvCurrencies.visibility = View.GONE
+                        binding.statusView.text = "Loading"
+
+                        result.status.let {
+                            adapter.submitList(emptyList())
+                        }
+                    }
                     Result.Status.ERROR -> {
-                        result.message.let { Snackbar.make(binding.root, it!!, Snackbar.LENGTH_LONG).show() }
+                        binding.statusView.visibility = View.VISIBLE
+                        binding.rvCurrencies.visibility = View.GONE
+                        binding.statusView.text = "Error"
+
+                        result.message.let {
+                            Snackbar.make(binding.root, it!!, Snackbar.LENGTH_LONG).show()
+                        }
                     }
                     Result.Status.SUCCESS -> {
+                        binding.statusView.visibility = View.GONE
+                        binding.rvCurrencies.visibility = View.VISIBLE
+
                         result.data?.let { adapter.submitList(it) }
                     }
                 }

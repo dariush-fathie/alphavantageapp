@@ -7,6 +7,7 @@ import com.alphavantage.app.domain.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 abstract class UseCase {
 
@@ -62,11 +63,11 @@ abstract class UseCase {
         networkCall: suspend () -> Result<T>,
         saveCallResult: suspend (T) -> Unit
     ) {
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             emitValue(Result.loading())
 
-            val dbRes = dbQuery.invoke()
-            val call = networkCall.invoke()
+            val dbRes = withContext(Dispatchers.Main) { dbQuery.invoke() }
+            val call = withContext(Dispatchers.Default) { networkCall.invoke() }
 
             if (call.status == Result.Status.SUCCESS) {
                 emitValue(call)
@@ -86,10 +87,11 @@ abstract class UseCase {
         emitValue: (Result<T>) -> Unit,
         networkCall: suspend () -> Result<T>
     ) {
-        scope.launch(Dispatchers.Default) {
+        scope.launch(Dispatchers.IO) {
             emitValue(Result.loading())
 
-            val call = networkCall.invoke()
+            val call =
+                withContext(Dispatchers.Default) { networkCall.invoke() }
 
             if (call.status == Result.Status.SUCCESS) {
                 emitValue(call)

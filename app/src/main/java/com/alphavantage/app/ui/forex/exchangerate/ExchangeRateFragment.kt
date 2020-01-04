@@ -10,8 +10,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.alphavantage.app.R
 import com.alphavantage.app.databinding.ExchangeRateFragmentBinding
-import com.alphavantage.app.ui.common.EventObserver
+import com.alphavantage.app.domain.widget.EventObserver
+import com.alphavantage.app.ui.common.setOnSafeClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.android.synthetic.main.exchange_rate_fragment.fromCurrencyLayout
+import kotlinx.android.synthetic.main.exchange_rate_fragment.toCurrencyLayout
 
 class ExchangeRateFragment : Fragment() {
 
@@ -36,7 +39,6 @@ class ExchangeRateFragment : Fragment() {
             false
         )
         binding.viewModel = viewModel
-        binding.actionToCurrencies = R.id.action_exchangeRateFragment_to_currenciesFragment
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -44,6 +46,14 @@ class ExchangeRateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
+        fromCurrencyLayout.setOnSafeClickListener {
+            viewModel.setGoToFromCurrenciesAction(R.id.action_exchangeRateFragment_to_currenciesFragment)
+        }
+
+        toCurrencyLayout.setOnSafeClickListener {
+            viewModel.setGoToToCurrenciesAction(R.id.action_exchangeRateFragment_to_currenciesFragment)
+        }
 
         viewModel.toFromCurrenciesEvent.observe(viewLifecycleOwner, EventObserver {
             navController?.navigate(it)

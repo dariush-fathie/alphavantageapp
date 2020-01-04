@@ -3,7 +3,7 @@ package com.alphavantage.app.ui.forex.exchangerate
 import androidx.lifecycle.*
 import com.alphavantage.app.domain.usecase.forex.CalculateExchangeRate
 import com.alphavantage.app.domain.usecase.general.SelectCurrency
-import com.alphavantage.app.ui.common.Event
+import com.alphavantage.app.domain.widget.Event
 
 class ExchangeRateViewModel(
     private val calculateExchangeRate: CalculateExchangeRate,
