@@ -13,7 +13,11 @@
 
         <action
             android:id="@+id/action_exchangeRateFragment_to_currenciesFragment"
-            app:destination="@id/currenciesFragment" />
+            app:destination="@id/currenciesFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment

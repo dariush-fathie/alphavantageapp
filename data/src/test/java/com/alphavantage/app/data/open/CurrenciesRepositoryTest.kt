@@ -4,7 +4,8 @@ import com.alphavantage.app.data.networkModule
 import com.alphavantage.app.data.remote.api.OpenApiService
 import com.alphavantage.app.data.remote.implementation.OpenApiRepositoryImplementation
 import com.alphavantage.app.domain.model.Result
-import com.alphavantage.app.domain.repository.open.OpenApiRepository
+import com.alphavantage.app.domain.model.general.Currency
+import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
@@ -18,12 +19,15 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import retrofit2.Response
 import retrofit2.Retrofit
 
 class CurrenciesRepositoryTest : KoinTest {
 
     private val retrofit by inject<Retrofit>()
-    private lateinit var repository : OpenApiRepository
+    private lateinit var service: OpenApiService
     private val mainThreadSurrogate = newSingleThreadContext("UI Thread")
 
     @Before
@@ -32,14 +36,31 @@ class CurrenciesRepositoryTest : KoinTest {
             modules(networkModule)
         }
 
-        val service = retrofit.create(OpenApiService::class.java)
-        repository = OpenApiRepositoryImplementation(service)
-
+        service = retrofit.create(OpenApiService::class.java)
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
     @Test
-    fun testGetCurrencies() {
+    fun testLocal() {
+        val res = runBlocking {
+            val parser = JsonParser()
+            val mockElement = parser.parse(mockCurrenciesJson)
+            val mockResponse = Response.success(mockElement)
+            val mockService = Mockito.mock(OpenApiService::class.java)
+
+            `when`(mockService.getCurrencies("https://openexchangerates.org/api/currencies.json")).thenReturn(mockResponse)
+            val repository = OpenApiRepositoryImplementation(mockService)
+            repository.getAllCurrencies()
+        }
+
+        assertEquals(Result.Status.SUCCESS, res.status)
+        assertEquals(mockList, res.data)
+    }
+
+    @Test
+    fun testRemote() {
+        val repository = OpenApiRepositoryImplementation(service)
+
         val res = runBlocking {
             repository.getAllCurrencies()
         }
@@ -54,4 +75,16 @@ class CurrenciesRepositoryTest : KoinTest {
 
         stopKoin()
     }
+
+    private val mockList = listOf<Currency>(
+        Currency("AED", "United Arab Emirates Dirham"),
+        Currency("AFN", "Afghan Afghani")
+    )
+
+    private val mockCurrenciesJson = """
+        {
+          "AED": "United Arab Emirates Dirham",
+          "AFN": "Afghan Afghani"
+        }
+    """.trimIndent()
 }
