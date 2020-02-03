@@ -1,7 +1,7 @@
 package com.alphavantage.app.data.local
 
 import android.content.Context
-import com.alphavantage.app.data.local.`object`.general.MyObjectBox
+import com.alphavantage.app.data.local.`object`.forex.MyObjectBox
 import io.objectbox.BoxStore
 
 class ObjectBox {

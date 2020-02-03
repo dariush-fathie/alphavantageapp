@@ -1,6 +1,6 @@
 package com.alphavantage.app.data.local.mapper.general
 
-import com.alphavantage.app.data.local.`object`.general.ExchangeRateEntity
+import com.alphavantage.app.data.local.`object`.forex.ExchangeRateEntity
 import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.model.forex.ExchangeRate
 

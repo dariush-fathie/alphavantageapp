@@ -35,14 +35,14 @@ class CryptoMapper {
                     val marketCap = iterator.next().value.asString.toDouble()
                     CryptoSeriesItem(
                         date = date,
-                        openMarketValue = openMarketValue,
-                        openUsdValue = openUsdValue,
-                        highMarketValue = highMarketValue,
-                        highUsdValue = highUsdValue,
-                        lowMarketValue = lowMarketValue,
-                        lowUsdValue = lowUsdValue,
-                        closeMarketValue = closeMarketValue,
-                        closeUsdValue = closeUsdValue,
+                        openMarket = openMarketValue,
+                        openUsd = openUsdValue,
+                        highMarket = highMarketValue,
+                        highUsd = highUsdValue,
+                        lowMarket = lowMarketValue,
+                        lowUsd = lowUsdValue,
+                        closeMarket = closeMarketValue,
+                        closeUsd = closeUsdValue,
                         volume = volume,
                         usdMarketCap = marketCap
                     )

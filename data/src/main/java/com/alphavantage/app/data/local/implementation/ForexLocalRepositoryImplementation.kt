@@ -1,11 +1,11 @@
 package com.alphavantage.app.data.local.implementation
 
 import com.alphavantage.app.data.local.ObjectBox
-import com.alphavantage.app.data.local.`object`.general.ExchangeRateEntity
-import com.alphavantage.app.data.local.`object`.general.ExchangeRateEntity_
+import com.alphavantage.app.data.local.`object`.forex.ExchangeRateEntity
+import com.alphavantage.app.data.local.`object`.forex.ExchangeRateEntity_
 import com.alphavantage.app.data.local.mapper.general.ExchangeRateMapper
-import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.model.forex.ExchangeRate
+import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.repository.forex.ForexLocalRepository
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
@@ -41,7 +41,7 @@ class ForexLocalRepositoryImplementation : ForexLocalRepository {
         currency2: Currency
     ): ExchangeRate? {
         val exchangeRateBox: Box<ExchangeRateEntity> = ObjectBox.boxStore.boxFor()
-        var exchangeRateEntity =
+        val exchangeRateEntity =
             exchangeRateBox.query().equal(ExchangeRateEntity_.currencyFrom, currency1.code)
                 .equal(ExchangeRateEntity_.currencyTo, currency1.code).build().findFirst()
         return if (exchangeRateEntity == null)

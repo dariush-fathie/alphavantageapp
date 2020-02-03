@@ -12,7 +12,7 @@ abstract class BaseImplementation {
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
-                    var mapped = mapper(body)
+                    val mapped = mapper(body)
                     return Result.success(mapped)
                 }
             }

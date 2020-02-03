@@ -1,4 +1,4 @@
-package com.alphavantage.app.data.local.`object`.general
+package com.alphavantage.app.data.local.`object`.forex
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

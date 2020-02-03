@@ -8,16 +8,16 @@ import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-fun provideGeneralService(retrofit: Retrofit): ForexService =
+fun provideForexService(retrofit: Retrofit): ForexService =
     retrofit.create(ForexService::class.java)
 
-fun provideGeneralRemoteRepository(service: ForexService): ForexRemoteRepository =
+fun provideForexRemoteRepository(service: ForexService): ForexRemoteRepository =
     ForexRemoteRepositoryImplementation(service)
 
-fun provideGeneralLocalRepository(): ForexLocalRepository = ForexLocalRepositoryImplementation()
+fun provideForexLocalRepository(): ForexLocalRepository = ForexLocalRepositoryImplementation()
 
 val generalRepositoryModule = module {
-    factory { provideGeneralService(get()) }
-    factory { provideGeneralRemoteRepository(get()) }
-    factory { provideGeneralLocalRepository() }
+    factory { provideForexService(get()) }
+    factory { provideForexRemoteRepository(get()) }
+    factory { provideForexLocalRepository() }
 }

@@ -44,6 +44,6 @@ class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
                 Result.Status.ERROR -> dataState.postValue(Result.error(it.message!!))
                 Result.Status.LOADING -> dataState.postValue(Result.loading())
             }
-        }, { remote.getExchangeRate(fromCurrency.code, toCurrency.code) })
+        }, { remote.getExchangeRate(fromCurrency, toCurrency) })
     }
 }
