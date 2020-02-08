@@ -14,8 +14,7 @@ class SelectCurrency : UseCase() {
     fun setCurrency(currency: Currency) {
         if (state == SelectState.FROM) {
             setFromCurrency(currency)
-        }
-        else if (state == SelectState.TO) {
+        } else if (state == SelectState.TO) {
             setToCurrency(currency)
         }
     }

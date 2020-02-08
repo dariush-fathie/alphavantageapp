@@ -2,15 +2,14 @@ package com.alphavantage.app.data.remote.mapper.forex
 
 import com.alphavantage.app.data.remote.response.forex.RealtimeExchangeRateResponse
 import com.alphavantage.app.domain.model.forex.ExchangeRate
-import com.alphavantage.app.domain.util.DateUtils
+import com.alphavantage.app.domain.util.parseToDate
 
 class ExchangeRateMapper {
 
     companion object {
 
         fun mapExchangeRate(response: RealtimeExchangeRateResponse): ExchangeRate {
-            val lastDate = DateUtils.parseStringToDate(
-                response.exchangeRateResponse.lastRefreshed,
+            val lastDate = response.exchangeRateResponse.lastRefreshed.parseToDate(
                 response.exchangeRateResponse.timeZone
             )
             return ExchangeRate(

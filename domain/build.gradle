@@ -62,10 +62,10 @@ dependencies {
     api "org.koin:koin-androidx-ext:$koinVersion"
 
     // Work
-    implementation "androidx.work:work-runtime-ktx:$workVersion"
+    api "androidx.work:work-runtime-ktx:$workVersion"
 
     // Misc
-    implementation "com.github.debop:koda-time:$kodaVersion"
+    api "com.github.debop:koda-time:$kodaVersion"
 
     //// END
 

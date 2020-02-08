@@ -3,7 +3,7 @@ package com.alphavantage.app.data.crypto
 import com.alphavantage.app.data.remote.mapper.crypto.CryptoMapper
 import com.alphavantage.app.domain.model.crypto.CryptoSeries
 import com.alphavantage.app.domain.model.crypto.CryptoSeriesItem
-import com.alphavantage.app.domain.util.DateUtils
+import com.alphavantage.app.domain.util.parseToDate
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
 import org.junit.Assert.assertEquals
@@ -18,10 +18,10 @@ class CryptoMapperTest {
     @Before
     fun setUp() {
         data = CryptoSeries(
-            lastRefreshed = DateUtils.parseStringToDate("2019-11-20 00:00:00", "UTC"),
+            lastRefreshed = "2019-11-20 00:00:00".parseToDate("UTC"),
             items = listOf(
                 CryptoSeriesItem(
-                    date = DateUtils.parseStringToDate("2019-11-20", null, "yyyy-MM-dd"),
+                    date = "2019-11-20".parseToDate(null, "yyyy-MM-dd"),
                     openMarket = 64289.49655200,
                     openUsd = 9140.86000000,
                     highMarket = 66911.61417600,
@@ -34,7 +34,7 @@ class CryptoMapperTest {
                     usdMarketCap = 722441.84657300
                 ),
                 CryptoSeriesItem(
-                    date = DateUtils.parseStringToDate("2019-10-31", null, "yyyy-MM-dd"),
+                    date = "2019-10-31".parseToDate(null, "yyyy-MM-dd"),
                     openMarket = 58305.01700400,
                     openUsd = 8289.97000000,
                     highMarket = 72934.28400000,

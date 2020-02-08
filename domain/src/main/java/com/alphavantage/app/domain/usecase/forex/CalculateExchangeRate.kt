@@ -2,14 +2,11 @@ package com.alphavantage.app.domain.usecase.forex
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
 import com.alphavantage.app.domain.model.Result
 import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import com.alphavantage.app.domain.usecase.UseCase
 import kotlinx.coroutines.CoroutineScope
-import org.koin.core.KoinComponent
 
 class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
     UseCase() {
@@ -40,7 +37,7 @@ class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
 
         retrieveNetwork(scope, {
             when (it.status) {
-                Result.Status.SUCCESS -> dataState.postValue(Result.success(it.data!!.rate * input!!))
+                Result.Status.SUCCESS -> dataState.postValue(Result.success(it.data!!.rate * input))
                 Result.Status.ERROR -> dataState.postValue(Result.error(it.message!!))
                 Result.Status.LOADING -> dataState.postValue(Result.loading())
             }

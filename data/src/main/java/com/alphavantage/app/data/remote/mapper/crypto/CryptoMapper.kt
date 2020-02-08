@@ -2,7 +2,7 @@ package com.alphavantage.app.data.remote.mapper.crypto
 
 import com.alphavantage.app.domain.model.crypto.CryptoSeries
 import com.alphavantage.app.domain.model.crypto.CryptoSeriesItem
-import com.alphavantage.app.domain.util.DateUtils
+import com.alphavantage.app.domain.util.parseToDate
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 
@@ -12,15 +12,14 @@ class CryptoMapper {
 
         fun mapSeries(response: JsonElement): CryptoSeries {
             val meta: JsonObject = response.asJsonObject.getAsJsonObject("Meta Data")
-            val lastDate = DateUtils.parseStringToDate(
-                meta.get("6. Last Refreshed").asString,
+            val lastDate = meta.get("6. Last Refreshed").asString.parseToDate(
                 meta.get("7. Time Zone").asString
             )
             val series: JsonObject =
                 response.asJsonObject.getAsJsonObject("Time Series (Digital Currency Monthly)")
             val data = series.entrySet()
                 .map {
-                    val date = DateUtils.parseStringToDate(it.key, null, "yyyy-MM-dd")
+                    val date = it.key.parseToDate(null, "yyyy-MM-dd")
                     val entries = it.value.asJsonObject.entrySet()
                     val iterator = entries.iterator()
                     val openMarketValue = iterator.next().value.asString.toDouble()
