@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -64,6 +63,8 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$legacyVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     // AndroidX Lifecycle
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

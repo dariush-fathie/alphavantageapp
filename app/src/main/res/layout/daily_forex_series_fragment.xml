@@ -1,13 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.forex.daily.DailyForexSeriesFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".ui.forex.daily.DailyForexSeriesFragment">
 
-</FrameLayout>
+        <com.github.mikephil.charting.charts.CandleStickChart
+            android:id="@+id/dailyChart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/openLabel"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Open:"
+            app:layout_constraintBottom_toTopOf="@+id/closeLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dailyChart"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/closeLabel"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Close:"
+            app:layout_constraintBottom_toTopOf="@+id/lowLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/openLabel" />
+
+        <TextView
+            android:id="@+id/lowLabel"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Low:"
+            app:layout_constraintBottom_toTopOf="@+id/highLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/closeLabel" />
+
+        <TextView
+            android:id="@+id/highLabel"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="High:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lowLabel" />
+
+        <TextView
+            android:id="@+id/openText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/openLabel"
+            app:layout_constraintTop_toTopOf="@+id/openLabel"
+            tools:text="IDR 0.00,-" />
+
+        <TextView
+            android:id="@+id/closeText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/closeLabel"
+            app:layout_constraintTop_toTopOf="@+id/closeLabel"
+            tools:text="IDR 0.00,-" />
+
+        <TextView
+            android:id="@+id/lowText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lowLabel"
+            app:layout_constraintTop_toTopOf="@+id/lowLabel"
+            tools:text="IDR 0.00,-" />
+
+        <TextView
+            android:id="@+id/highText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/highLabel"
+            app:layout_constraintTop_toTopOf="@+id/highLabel"
+            tools:text="IDR 0.00,-" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
