@@ -11,7 +11,10 @@ import com.alphavantage.app.domain.usecase.general.SelectCurrency
 import com.alphavantage.app.domain.widget.Event
 import timber.log.Timber
 
-class CurrenciesViewModel(private val fetchCurrencies: FetchCurrencies, private val selectCurrency: SelectCurrency) : ViewModel() {
+class CurrenciesViewModel(
+    private val fetchCurrencies: FetchCurrencies,
+    private val selectCurrency: SelectCurrency
+) : ViewModel() {
     // TODO: Implement the ViewModel
 
     val items: LiveData<Event<Result<List<Currency>>>> get() = fetchCurrencies.data
