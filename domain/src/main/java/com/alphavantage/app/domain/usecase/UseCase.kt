@@ -11,51 +11,6 @@ import kotlinx.coroutines.withContext
 
 abstract class UseCase {
 
-    @Deprecated("Sementara belum dipakai, scope livedata")
-    protected fun <T> retrieveNetworkAndSync(
-        dbQuery: () -> T?,
-        networkCall: suspend () -> Result<T>,
-        saveCallResult: suspend (T) -> Unit
-    ): LiveData<Result<T>> = liveData(Dispatchers.IO) {
-        emit(Result.loading())
-
-        val dbRes = dbQuery.invoke()
-        val liveData = MutableLiveData<Result<T>>()
-
-        val callRes = networkCall.invoke()
-        if (callRes.status == Result.Status.SUCCESS) {
-            liveData.postValue(callRes)
-            emitSource(liveData)
-
-            saveCallResult(callRes.data!!)
-        } else {
-            if (dbRes != null) {
-                liveData.postValue(Result.success(dbRes))
-                emitSource(liveData)
-            }
-
-            emit(Result.error(callRes.message!!))
-        }
-    }
-
-    @Deprecated("Sementara belum dipakai, scope livedata")
-    protected fun <T> retrieveNetwork(
-        networkCall: suspend () -> Result<T>
-    ): LiveData<Result<T>> =
-        liveData(Dispatchers.IO) {
-            emit(Result.loading())
-
-            val callStatus = networkCall.invoke()
-            val callLiveData: MutableLiveData<Result<T>> = MutableLiveData()
-
-            if (callStatus.status == Result.Status.SUCCESS) {
-                callLiveData.postValue(callStatus)
-                emitSource(callLiveData)
-            } else {
-                emit(Result.error(callStatus.message!!))
-            }
-        }
-
     protected fun <T> retrieveNetworkAndSync(
         scope: CoroutineScope,
         emitValue: (Result<T>) -> Unit,
@@ -76,7 +31,7 @@ abstract class UseCase {
                 emitValue(Result.error(call.message!!))
 
                 if (dbRes != null) {
-                    emitValue(call)
+                    emitValue(Result.success(dbRes))
                 }
             }
         }

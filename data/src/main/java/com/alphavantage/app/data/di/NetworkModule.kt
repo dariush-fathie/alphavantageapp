@@ -1,72 +1,16 @@
 package com.alphavantage.app.data.di
 
-import android.content.Context
-import android.os.Looper
 import com.alphavantage.app.data.BuildConfig
 import com.alphavantage.app.data.remote.ApiConstants
-import com.alphavantage.app.domain.util.NetworkUtils
-import com.andre.apikeys.KeyStore
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
-
-@Deprecated("Sementara tidak terpakai")
-fun provideContext(context: Context): Context = context.applicationContext
-
-@Deprecated("Sementara tidak terpakai")
-fun provideCache(context: Context): Cache {
-    if (Looper.getMainLooper() == Looper.myLooper())
-        throw IllegalStateException("Initializing cache on main thread")
-
-    val file = File(context.cacheDir, "av_cache")
-    return Cache(file, ApiConstants.CACHE_SIZE)
-}
-
-@Deprecated("Sementara tidak terpakai")
-fun provideHttpClient(context: Context, cache: Cache): OkHttpClient {
-    if (Looper.getMainLooper() == Looper.myLooper())
-        throw IllegalStateException("Initializing cache on main thread")
-
-    return OkHttpClient.Builder()
-        .connectTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)
-        .readTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)
-        .writeTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)
-        .cache(cache)
-        .addInterceptor { chain ->
-            var request = chain.request()
-            // TODO put API key in NDK
-            val url = when (request.url.host) {
-                "www.alphavantage.co" -> request.url.newBuilder().addQueryParameter(
-                    "apikey",
-                    KeyStore.getApiKey()
-                ).build()
-                else -> request.url.newBuilder().build()
-            }
-
-            request = if (NetworkUtils.hasNetwork(context))
-                request.newBuilder().header(
-                    "Cache-Control",
-                    "public, max-age=" + 5
-                ).url(url).build()
-            else
-                request.newBuilder().header(
-                    "Cache-Control",
-                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
-                ).url(url).build()
-
-            chain.proceed(request)
-        }
-        .build()
-}
 
 fun provideHttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
@@ -79,7 +23,7 @@ fun provideHttpClient(): OkHttpClient {
             val url = when (request.url.host) {
                 "www.alphavantage.co" -> request.url.newBuilder().addQueryParameter(
                     "apikey",
-                    "FS0FJ420A52OG88R"
+                    "FS0FJ420A520G88R"
                 ).build()
                 else -> request.url.newBuilder().build()
             }
@@ -141,8 +85,6 @@ fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit = Retrofit
     .build()
 
 val networkModule = module {
-//    factory { provideContext(get()) }
-//    factory { provideCache(get()) }
     factory { provideHttpClient() }
     factory { provideTypeAdapter() }
     factory { provideGson(get()) }

@@ -11,40 +11,47 @@ class ExchangeRateViewModel(
 ) : ViewModel() {
 
     // Variables
-    private var fromCurrencyState = selectCurrency.fromCurrency
-    val fromCurrency: LiveData<String?> get() = fromCurrencyState.map { it.code }
+    private var _fromCurrency = selectCurrency.fromCurrency
+    val fromCurrency: LiveData<String?> get() = _fromCurrency.map { it.code }
 
-    private var toCurrencyState = selectCurrency.toCurrency
-    val toCurrency: LiveData<String?> get() = toCurrencyState.map { it.code }
+    private var _toCurrency = selectCurrency.toCurrency
+    val toCurrency: LiveData<String?> get() = _toCurrency.map { it.code }
 
     var input = MutableLiveData<String>()
 
-    private var outputState = calculateExchangeRate.data
-    val output: LiveData<Double?> get() = outputState.map { it.data }
+    private var _output = calculateExchangeRate.data
+    val output: LiveData<Double?> get() = _output.map { it.data }
 
     // Events
-    private var toFromCurrenciesEventState = MutableLiveData<Event<Int>>()
-    val toFromCurrenciesEvent: LiveData<Event<Int>> get() = toFromCurrenciesEventState
+    private var _toFromCurrenciesEvent = MutableLiveData<Event<Int>>()
+    val toFromCurrenciesEvent: LiveData<Event<Int>> get() = _toFromCurrenciesEvent
 
-    private var toToCurrenciesEventState = MutableLiveData<Event<Int>>()
-    val toToCurrenciesEvent: LiveData<Event<Int>> get() = toToCurrenciesEventState
+    private var _toToCurrenciesEvent = MutableLiveData<Event<Int>>()
+    val toToCurrenciesEvent: LiveData<Event<Int>> get() = _toToCurrenciesEvent
+
+    private var _toDailyEvent = MutableLiveData<Event<Unit>>()
+    val toDailyEvent: LiveData<Event<Unit>> get() = _toDailyEvent
 
     fun calculate() {
         calculateExchangeRate.execute(
             viewModelScope,
-            fromCurrencyState.value,
-            toCurrencyState.value,
+            _fromCurrency.value,
+            _toCurrency.value,
             input.value!!.toDoubleOrNull()
         )
     }
 
+    fun openDaily() {
+        _toDailyEvent.value = Event(Unit)
+    }
+
     fun setGoToFromCurrenciesAction(destination: Int) {
         selectCurrency.state = SelectCurrency.SelectState.FROM
-        toFromCurrenciesEventState.value = Event(destination)
+        _toFromCurrenciesEvent.value = Event(destination)
     }
 
     fun setGoToToCurrenciesAction(destination: Int) {
         selectCurrency.state = SelectCurrency.SelectState.TO
-        toToCurrenciesEventState.value = Event(destination)
+        _toToCurrenciesEvent.value = Event(destination)
     }
 }

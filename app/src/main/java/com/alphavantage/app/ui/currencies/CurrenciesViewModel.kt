@@ -19,8 +19,8 @@ class CurrenciesViewModel(
 
     val items: LiveData<Event<Result<List<Currency>>>> get() = fetchCurrencies.data
 
-    private var toPreviousEvent = MutableLiveData<Event<Unit>>()
-    val toPrevious: LiveData<Event<Unit>> get() = toPreviousEvent
+    private var _toPreviousEvent = MutableLiveData<Event<Unit>>()
+    val toPreviousEvent: LiveData<Event<Unit>> get() = _toPreviousEvent
 
     fun itemClick(item: Currency) {
         // TODO back to ViewModel
@@ -34,6 +34,6 @@ class CurrenciesViewModel(
     }
 
     private fun backToPrevious() {
-        toPreviousEvent.value = Event(Unit)
+        _toPreviousEvent.value = Event(Unit)
     }
 }

@@ -1,2 +1,2 @@
-include ':app', ':domain', ':data', ':apikeys'
+include ':app', ':domain', ':data'
 rootProject.name='AlphaVantage'
