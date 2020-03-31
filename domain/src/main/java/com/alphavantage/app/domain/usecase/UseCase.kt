@@ -1,8 +1,5 @@
 package com.alphavantage.app.domain.usecase
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import com.alphavantage.app.domain.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
