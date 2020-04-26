@@ -6,6 +6,8 @@ import com.alphavantage.app.domain.model.forex.ExchangeRate
 import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import com.alphavantage.app.domain.usecase.general.SelectCurrency
+import com.alphavantage.app.domain.util.getOrAwaitValue
+import com.alphavantage.app.domain.widget.DispatcherProvider
 import com.alphavantage.app.rule.CoroutinesTestRule
 import com.alphavantage.app.rule.runBlockingTest
 import com.alphavantage.app.testModules
@@ -19,6 +21,7 @@ import org.junit.runners.JUnit4
 import org.koin.core.context.startKoin
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
+import org.koin.test.mock.declare
 import org.koin.test.mock.declareMock
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -32,8 +35,6 @@ class ExchangeRateViewModelTest : AutoCloseKoinTest() {
 
     @get:Rule
     val coroutinesRule = CoroutinesTestRule()
-
-    private val repository: ForexRemoteRepository by inject()
 
     private val viewModel: ExchangeRateViewModel by inject()
     private val selectCurrency: SelectCurrency by inject()
@@ -53,17 +54,14 @@ class ExchangeRateViewModelTest : AutoCloseKoinTest() {
             modules(testModules)
         }
 
-        declareMock<ForexRemoteRepository>()
+        declare { factory { coroutinesRule.testDispatcherProvider } }
     }
 
     @Test
     fun testCalculate() {
         coroutinesRule.runBlockingTest {
-            `when`(result.rate).thenReturn(2.0)
             `when`(fromCurrency.code).thenReturn("USD")
             `when`(toCurrency.code).thenReturn("JPY")
-
-            `when`(repository.getExchangeRate("USD", "JPY")).thenReturn(Result.success(result))
 
             selectCurrency.fromCurrency.postValue(fromCurrency)
             selectCurrency.toCurrency.postValue(toCurrency)
@@ -71,7 +69,8 @@ class ExchangeRateViewModelTest : AutoCloseKoinTest() {
 
             viewModel.calculate()
 
-            assertEquals(2.0, viewModel.output.value!!, 0.001)
+            val value = viewModel.output.getOrAwaitValue()!!
+            assertEquals(107.52, value, 0.001)
         }
     }
 }

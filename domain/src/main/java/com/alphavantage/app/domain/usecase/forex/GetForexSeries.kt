@@ -9,6 +9,8 @@ import com.alphavantage.app.domain.repository.forex.ForexLocalRepository
 import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import com.alphavantage.app.domain.usecase.UseCase
 import com.alphavantage.app.domain.util.postEventValue
+import com.alphavantage.app.domain.widget.DefaultDispatcherProvider
+import com.alphavantage.app.domain.widget.DispatcherProvider
 import com.alphavantage.app.domain.widget.Event
 import kotlinx.coroutines.CoroutineScope
 
@@ -23,7 +25,8 @@ class GetForexSeries(
     fun executeAndSync(
         scope: CoroutineScope,
         fromCurrency: Currency?,
-        toCurrency: Currency?
+        toCurrency: Currency?,
+        dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
     ) {
         if (fromCurrency == null) {
             dataState.postValue(Result.error("Kurs asal kosong"))
@@ -47,13 +50,14 @@ class GetForexSeries(
             remote.getDailySeries(fromCurrency, toCurrency)
         }, {
             local.saveDailySeries(it, fromCurrency, toCurrency)
-        })
+        }, dispatcherProvider)
     }
 
     fun execute(
         scope: CoroutineScope,
         fromCurrency: Currency?,
-        toCurrency: Currency?
+        toCurrency: Currency?,
+        dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
     ) {
         if (fromCurrency == null) {
             dataState.postValue(Result.error("Kurs asal kosong"))
@@ -73,6 +77,7 @@ class GetForexSeries(
             }
         }, {
             remote.getDailySeries(fromCurrency, toCurrency)
-        })
+        },
+        dispatcherProvider)
     }
 }

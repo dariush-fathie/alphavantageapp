@@ -8,16 +8,19 @@ import com.alphavantage.app.domain.model.Result
 import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.usecase.general.FetchCurrencies
 import com.alphavantage.app.domain.usecase.general.SelectCurrency
+import com.alphavantage.app.domain.widget.DefaultDispatcherProvider
+import com.alphavantage.app.domain.widget.DispatcherProvider
 import com.alphavantage.app.domain.widget.Event
 import timber.log.Timber
 
 class CurrenciesViewModel(
     private val fetchCurrencies: FetchCurrencies,
-    private val selectCurrency: SelectCurrency
+    private val selectCurrency: SelectCurrency,
+    private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
     // TODO: Implement the ViewModel
 
-    val items: LiveData<Event<Result<List<Currency>>>> get() = fetchCurrencies.data
+    val items: LiveData<Result<List<Currency>>> get() = fetchCurrencies.data
 
     private var _toPreviousEvent = MutableLiveData<Event<Unit>>()
     val toPreviousEvent: LiveData<Event<Unit>> get() = _toPreviousEvent
@@ -30,7 +33,7 @@ class CurrenciesViewModel(
     }
 
     fun getItems() {
-        fetchCurrencies.execute(viewModelScope)
+        fetchCurrencies.execute(viewModelScope, dispatcherProvider)
     }
 
     private fun backToPrevious() {

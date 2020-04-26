@@ -1,46 +1,53 @@
 package com.alphavantage.app.rule
 
+import com.alphavantage.app.domain.widget.DispatcherProvider
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.*
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
-class CoroutinesTestRule(val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()) :
+class CoroutinesTestRule :
     TestWatcher() {
 
-    override fun finished(description: Description?) {
-        super.finished(description)
-        Dispatchers.resetMain()
-        dispatcher.cleanupTestCoroutines()
-    }
+    val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+    val scope: TestCoroutineScope = TestCoroutineScope(dispatcher)
 
     override fun starting(description: Description?) {
         super.starting(description)
         Dispatchers.setMain(dispatcher)
     }
 
+    override fun finished(description: Description?) {
+        super.finished(description)
+        Dispatchers.resetMain()
+        scope.cleanupTestCoroutines()
+    }
+
     fun pause() {
-        dispatcher.pauseDispatcher()
+        scope.pauseDispatcher()
     }
 
     fun resume() {
-        dispatcher.resumeDispatcher()
+        scope.resumeDispatcher()
+    }
+
+    val testDispatcherProvider = object : DispatcherProvider {
+
+        override fun main(): CoroutineDispatcher = dispatcher
+
+        override fun default(): CoroutineDispatcher = dispatcher
+
+        override fun io(): CoroutineDispatcher = dispatcher
+
+        override fun unconfined(): CoroutineDispatcher = dispatcher
     }
 }
 
 @ExperimentalCoroutinesApi
-fun CoroutinesTestRule.runBlockingTest(block: suspend () -> Unit) =
-    this.dispatcher.runBlockingTest {
+fun CoroutinesTestRule.runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
+    this.scope.runBlockingTest {
         block()
     }
-
-@ExperimentalCoroutinesApi
-fun CoroutinesTestRule.pause() = this.pause()
-
-@ExperimentalCoroutinesApi
-fun CoroutinesTestRule.resume() = this.resume()

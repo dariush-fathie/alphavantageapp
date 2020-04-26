@@ -29,22 +29,16 @@ import java.util.concurrent.TimeoutException
  * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.
  */
 fun <T> LiveData<T>.getOrAwaitValue(
-    time: Long = 2,
-    timeUnit: TimeUnit = TimeUnit.SECONDS,
-    afterObserve: () -> Unit = {}
+    time: Long = 5,
+    timeUnit: TimeUnit = TimeUnit.MINUTES
 ): T {
     var data: T? = null
-    val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
-        override fun onChanged(o: T?) {
-            data = o
-            latch.countDown()
-            this@getOrAwaitValue.removeObserver(this)
-        }
+    val latch = CountDownLatch(2)
+    val observer = Observer<T> { o ->
+        data = o
+        latch.countDown()
     }
     this.observeForever(observer)
-
-    afterObserve.invoke()
 
     // Don't wait indefinitely if the LiveData is not set.
     if (!latch.await(time, timeUnit)) {

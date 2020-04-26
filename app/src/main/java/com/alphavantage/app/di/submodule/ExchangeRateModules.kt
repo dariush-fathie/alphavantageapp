@@ -7,6 +7,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val exchangeRateViewModules = module {
-    viewModel { DailyForexSeriesViewModel(get(), get()) }
-    viewModel { ExchangeRateViewModel(get(), get()) }
+    viewModel { DailyForexSeriesViewModel(get(), get(), get()) }
+    viewModel { ExchangeRateViewModel(get(), get(), get()) }
 }

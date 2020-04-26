@@ -6,11 +6,14 @@ import com.alphavantage.app.domain.model.forex.ForexSeries
 import com.alphavantage.app.domain.model.forex.ForexSeriesItem
 import com.alphavantage.app.domain.usecase.forex.GetForexSeries
 import com.alphavantage.app.domain.usecase.general.SelectCurrency
+import com.alphavantage.app.domain.widget.DefaultDispatcherProvider
+import com.alphavantage.app.domain.widget.DispatcherProvider
 
 // TODO run worker from ViewModel
 class DailyForexSeriesViewModel(
     private val getForexSeries: GetForexSeries,
-    private val selectCurrency: SelectCurrency
+    private val selectCurrency: SelectCurrency,
+    private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     // Variables
@@ -36,7 +39,8 @@ class DailyForexSeriesViewModel(
         getForexSeries.executeAndSync(
             viewModelScope,
             _fromCurrency.value,
-            _toCurrency.value
+            _toCurrency.value,
+            dispatcherProvider
         )
     }
 }

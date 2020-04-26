@@ -4,6 +4,7 @@ import com.alphavantage.app.data.networkModule
 import com.alphavantage.app.data.remote.api.ForexService
 import com.alphavantage.app.data.remote.implementation.ForexRemoteRepositoryImplementation
 import com.alphavantage.app.domain.model.Result
+import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
@@ -41,21 +42,21 @@ class ExchangeRateRepositoryTest : KoinTest {
     @Test
     fun testRunExchangeRate() {
         val res = runBlocking {
-            repository.getExchangeRate("USD", "JPY")
+            repository.getExchangeRate(Currency("USD", "American Dollar"), Currency("JPY", "Japanese Yen"))
         }
 
         // TODO gak bisa test karena realtime
         assertEquals(Result.Status.SUCCESS, res.status)
         assertNotNull(res.data)
-        assertEquals(108.65, res.data!!.rate, 0.001)
-        assertEquals(108.65, res.data!!.bidPrice, 0.001)
-        assertEquals(108.65, res.data!!.askPrice, 0.001)
+//        assertEquals(107.786, res.data!!.rate, 0.001)
+//        assertEquals(107.788, res.data!!.bidPrice, 0.001)
+//        assertEquals(107.791, res.data!!.askPrice, 0.001)
     }
 
     @Test
     fun testErrorExchangeRate() {
         val res = runBlocking {
-            repository.getExchangeRate("USD", "JPK")
+            repository.getExchangeRate(Currency("USD", "American Dollar"), Currency("JPK", "Japanese Ko"))
         }
 
         assertEquals(Result.Status.ERROR, res.status)

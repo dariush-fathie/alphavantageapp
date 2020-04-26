@@ -76,7 +76,7 @@ class CurrenciesRepositoryTest : KoinTest {
         stopKoin()
     }
 
-    private val mockList = listOf<Currency>(
+    private val mockList = listOf(
         Currency("AED", "United Arab Emirates Dirham"),
         Currency("AFN", "Afghan Afghani")
     )

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.alphavantage.app.R
@@ -71,7 +72,7 @@ class CurrenciesFragment : Fragment() {
         binding.rvCurrencies.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner,
-            EventObserver { result ->
+            Observer { result ->
                 // TODO loading
                 when (result.status) {
                     Result.Status.LOADING -> {

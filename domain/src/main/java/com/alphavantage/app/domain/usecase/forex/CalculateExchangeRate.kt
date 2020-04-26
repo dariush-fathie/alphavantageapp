@@ -6,6 +6,8 @@ import com.alphavantage.app.domain.model.Result
 import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import com.alphavantage.app.domain.usecase.UseCase
+import com.alphavantage.app.domain.widget.DefaultDispatcherProvider
+import com.alphavantage.app.domain.widget.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 
 class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
@@ -18,7 +20,8 @@ class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
         scope: CoroutineScope,
         fromCurrency: Currency?,
         toCurrency: Currency?,
-        input: Double?
+        input: Double?,
+        dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
     ) {
         if (fromCurrency == null) {
             dataState.postValue(Result.error("Kurs asal kosong"))
@@ -41,6 +44,6 @@ class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
                 Result.Status.ERROR -> dataState.postValue(Result.error(it.message!!))
                 Result.Status.LOADING -> dataState.postValue(Result.loading())
             }
-        }, { remote.getExchangeRate(fromCurrency, toCurrency) })
+        }, { remote.getExchangeRate(fromCurrency, toCurrency) }, dispatcherProvider)
     }
 }
