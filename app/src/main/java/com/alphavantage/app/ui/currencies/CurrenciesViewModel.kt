@@ -18,7 +18,6 @@ class CurrenciesViewModel(
     private val selectCurrency: SelectCurrency,
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
-    // TODO: Implement the ViewModel
 
     val items: LiveData<Result<List<Currency>>> get() = fetchCurrencies.data
 
@@ -26,7 +25,6 @@ class CurrenciesViewModel(
     val toPreviousEvent: LiveData<Event<Unit>> get() = _toPreviousEvent
 
     fun itemClick(item: Currency) {
-        // TODO back to ViewModel
         Timber.i(item.name)
         selectCurrency.setCurrency(item)
         backToPrevious()

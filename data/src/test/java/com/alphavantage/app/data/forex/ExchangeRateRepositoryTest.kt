@@ -45,12 +45,8 @@ class ExchangeRateRepositoryTest : KoinTest {
             repository.getExchangeRate(Currency("USD", "American Dollar"), Currency("JPY", "Japanese Yen"))
         }
 
-        // TODO gak bisa test karena realtime
         assertEquals(Result.Status.SUCCESS, res.status)
         assertNotNull(res.data)
-//        assertEquals(107.786, res.data!!.rate, 0.001)
-//        assertEquals(107.788, res.data!!.bidPrice, 0.001)
-//        assertEquals(107.791, res.data!!.askPrice, 0.001)
     }
 
     @Test

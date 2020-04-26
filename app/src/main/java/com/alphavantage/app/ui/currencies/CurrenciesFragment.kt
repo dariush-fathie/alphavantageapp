@@ -73,7 +73,6 @@ class CurrenciesFragment : Fragment() {
 
         viewModel.items.observe(viewLifecycleOwner,
             Observer { result ->
-                // TODO loading
                 when (result.status) {
                     Result.Status.LOADING -> {
                         binding.statusView.visibility = View.VISIBLE

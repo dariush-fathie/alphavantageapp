@@ -21,7 +21,6 @@ fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
     .writeTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)
     .addInterceptor { chain ->
         var request = chain.request()
-        // TODO put API key in NDK
         val url = when (request.url.host) {
             "www.alphavantage.co" -> request.url.newBuilder().addQueryParameter(
                 "apikey",

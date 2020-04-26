@@ -19,11 +19,10 @@ fun provideHttpClient(): OkHttpClient {
         .writeTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)
         .addInterceptor { chain ->
             var request = chain.request()
-            // TODO put API key in NDK
             val url = when (request.url.host) {
                 "www.alphavantage.co" -> request.url.newBuilder().addQueryParameter(
                     "apikey",
-                    "FS0FJ420A520G88R"
+                    TODO("Put your AlphaVantage API key here")
                 ).build()
                 else -> request.url.newBuilder().build()
             }
@@ -43,7 +42,7 @@ fun provideTypeAdapter(): TypeAdapterFactory {
 
         override fun <T : Any?> create(gson: Gson?, type: TypeToken<T>?): TypeAdapter<T> {
             val delegate = gson!!.getDelegateAdapter(this, type)
-            val elementAdapter = gson!!.getAdapter(JsonElement::class.java)
+            val elementAdapter = gson.getAdapter(JsonElement::class.java)
 
             return object : TypeAdapter<T>() {
 

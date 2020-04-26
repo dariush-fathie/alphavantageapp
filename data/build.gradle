@@ -13,6 +13,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "BASE_API_URL", "\"https://www.alphavantage.co/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -20,12 +21,10 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            buildConfigField "String", "BASE_API_URL", "\"https://www.alphavantage.co/\""
             proguardFiles 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
-            buildConfigField "String", "BASE_API_URL", "\"https://www.alphavantage.co/\""
             proguardFiles 'proguard-rules.pro'
         }
     }
