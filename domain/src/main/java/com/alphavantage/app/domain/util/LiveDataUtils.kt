@@ -33,6 +33,8 @@ fun <T> LiveData<T>.getOrAwaitValue(
     timeUnit: TimeUnit = TimeUnit.MINUTES
 ): T {
     var data: T? = null
+    // Using 2 counts because on LiveData in ViewModels, the value will always be set twice,
+    // loading, then success or error
     val latch = CountDownLatch(2)
     val observer = Observer<T> { o ->
         data = o
