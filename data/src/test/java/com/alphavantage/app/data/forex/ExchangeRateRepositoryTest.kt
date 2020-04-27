@@ -15,12 +15,15 @@ import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import retrofit2.Retrofit
 
+@RunWith(JUnit4::class)
 class ExchangeRateRepositoryTest : KoinTest {
 
     private val retrofit by inject<Retrofit>()

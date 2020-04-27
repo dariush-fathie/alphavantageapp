@@ -12,9 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-/**
- * Still used just to test if the url is working
- * */
+// New http client just to test that the response is working
 fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
     .connectTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)
     .readTimeout(ApiConstants.REQUEST_TIMEOUT, TimeUnit.SECONDS)

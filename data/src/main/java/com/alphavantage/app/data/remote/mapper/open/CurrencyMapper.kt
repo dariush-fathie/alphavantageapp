@@ -8,7 +8,7 @@ class CurrencyMapper {
 
     companion object {
 
-        fun MapCurrencies(response: JsonElement) : List<Currency> {
+        fun mapCurrencies(response: JsonElement) : List<Currency> {
             val obj: JsonObject = response.asJsonObject
             return obj.entrySet()
                 .map {

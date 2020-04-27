@@ -27,6 +27,9 @@ import java.util.concurrent.TimeoutException
  *
  * Use this extension from host-side (JVM) tests. It's recommended to use it alongside
  * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.
+ *
+ * @param time sets the minute to wait for observer to be removed.
+ * @param timeUnit sets the unit to minutes by default
  */
 fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 5,
@@ -35,6 +38,7 @@ fun <T> LiveData<T>.getOrAwaitValue(
     var data: T? = null
     // Using 2 counts because on LiveData in ViewModels, the value will always be set twice,
     // loading, then success or error
+    // You may set the count to 1 if the value will be always set once
     val latch = CountDownLatch(2)
     val observer = Observer<T> { o ->
         data = o

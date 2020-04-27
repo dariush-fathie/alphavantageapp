@@ -32,9 +32,6 @@ class ExchangeRateViewModel(
     private var _toToCurrenciesEvent = MutableLiveData<Event<Int>>()
     val toToCurrenciesEvent: LiveData<Event<Int>> get() = _toToCurrenciesEvent
 
-    private var _toDailyEvent = MutableLiveData<Event<Unit>>()
-    val toDailyEvent: LiveData<Event<Unit>> get() = _toDailyEvent
-
     fun calculate() {
         calculateExchangeRate.execute(
             viewModelScope,
@@ -43,10 +40,6 @@ class ExchangeRateViewModel(
             input.value!!.toDoubleOrNull(),
             dispatcherProvider
         )
-    }
-
-    fun openDaily() {
-        _toDailyEvent.value = Event(Unit)
     }
 
     fun setGoToFromCurrenciesAction(destination: Int) {

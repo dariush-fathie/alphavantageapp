@@ -8,6 +8,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+// Test to parse json element to list of objects since the response couldn't be mapped.
 class CurrenciesMapperTest {
 
     lateinit var jsonElement: JsonElement
@@ -20,7 +21,7 @@ class CurrenciesMapperTest {
 
     @Test
     fun testMapper() {
-        assertEquals(list, CurrencyMapper.MapCurrencies(jsonElement))
+        assertEquals(list, CurrencyMapper.mapCurrencies(jsonElement))
     }
 
     private val list = listOf(

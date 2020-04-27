@@ -10,32 +10,3 @@ fun String.parseToDate(timezoneString: String?, pattern: String = "yyyy-MM-dd HH
         formatter.timeZone = TimeZone.getTimeZone(timezoneString)
     return formatter.parse(this)
 }
-
-fun Date.parseToString(format: String = "dd MMM yyyy"): String {
-    val formatter = SimpleDateFormat(format, Locale.getDefault())
-    return formatter.format(this)
-}
-
-fun Date.atStartOfTheDay(): Date {
-    val calendar = Calendar.getInstance()
-    calendar.time = this
-    calendar.set(Calendar.HOUR_OF_DAY, 0)
-    calendar.set(Calendar.MINUTE, 0)
-    calendar.set(Calendar.SECOND, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    return calendar.time
-}
-
-fun Date.addDays(days: Int): Date {
-    val calendar = Calendar.getInstance()
-    calendar.time = this
-    calendar.add(Calendar.DATE, days)
-    return calendar.time
-}
-
-fun Date.addHours(hours: Int): Date {
-    val calendar = Calendar.getInstance()
-    calendar.time = this
-    calendar.add(Calendar.HOUR_OF_DAY, hours)
-    return calendar.time
-}

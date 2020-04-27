@@ -15,15 +15,18 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 import retrofit2.Retrofit
 
+@RunWith(MockitoJUnitRunner::class)
 class CurrenciesRepositoryTest : KoinTest {
 
     private val retrofit by inject<Retrofit>()
