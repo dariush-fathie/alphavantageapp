@@ -1,4 +1,4 @@
-package com.alphavantage.app.ui.forex.exchangerate
+package com.alphavantage.app.ui.exchangerate
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,6 @@ import com.alphavantage.app.databinding.ExchangeRateFragmentBinding
 import com.alphavantage.app.domain.widget.EventObserver
 import com.alphavantage.app.ui.common.setOnSafeClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlinx.android.synthetic.main.exchange_rate_fragment.fromCurrencyLayout
-import kotlinx.android.synthetic.main.exchange_rate_fragment.toCurrencyLayout
 
 class ExchangeRateFragment : Fragment() {
 
@@ -47,11 +45,11 @@ class ExchangeRateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        fromCurrencyLayout.setOnSafeClickListener {
+        binding.fromCurrencyLayout.setOnSafeClickListener {
             viewModel.setGoToFromCurrenciesAction(R.id.action_exchangeRateFragment_to_currenciesFragment)
         }
 
-        toCurrencyLayout.setOnSafeClickListener {
+        binding.toCurrencyLayout.setOnSafeClickListener {
             viewModel.setGoToToCurrenciesAction(R.id.action_exchangeRateFragment_to_currenciesFragment)
         }
 

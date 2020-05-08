@@ -7,20 +7,13 @@
 
     <fragment
         android:id="@+id/exchangeRateFragment"
-        android:name="com.alphavantage.app.ui.forex.exchangerate.ExchangeRateFragment"
+        android:name="com.alphavantage.app.ui.exchangerate.ExchangeRateFragment"
         android:label="exchange_rate_fragment"
         tools:layout="@layout/exchange_rate_fragment">
 
         <action
             android:id="@+id/action_exchangeRateFragment_to_currenciesFragment"
             app:destination="@id/currenciesFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_open_exit"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit" />
-        <action
-            android:id="@+id/action_exchangeRateFragment_to_dailyForexSeriesFragment"
-            app:destination="@id/dailyForexSeriesFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_fade_enter"
@@ -32,10 +25,4 @@
         android:name="com.alphavantage.app.ui.currencies.CurrenciesFragment"
         android:label="currencies_fragment"
         tools:layout="@layout/currencies_fragment" />
-
-    <fragment
-        android:id="@+id/dailyForexSeriesFragment"
-        android:name="com.alphavantage.app.ui.forex.daily.DailyForexSeriesFragment"
-        android:label="DailyForexSeriesFragment"
-        tools:layout="@layout/constraint_test" />
 </navigation>

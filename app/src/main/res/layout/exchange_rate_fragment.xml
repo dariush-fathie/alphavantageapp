@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="viewModel"
             type="com.alphavantage.app.ui.exchangerate.ExchangeRateViewModel" />
@@ -139,18 +138,6 @@
                 android:padding="6dp"
                 android:text="@{Double.toString(viewModel.output)}"
                 android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/openDailyButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"
-                android:onClick="@{() -> viewModel.openDaily()}"
-                android:padding="6dp"
-                android:text="Open Daily"
-                android:textAllCaps="false"
-                android:textSize="13sp" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

@@ -10,7 +10,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.alphavantage.app.R
 import com.alphavantage.app.addons.createRule
 import com.alphavantage.app.addons.testModules
-import com.alphavantage.app.ui.forex.exchangerate.ExchangeRateFragment
+import com.alphavantage.app.ui.exchangerate.ExchangeRateFragment
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +20,8 @@ import org.koin.core.context.startKoin
 @RunWith(AndroidJUnit4ClassRunner::class)
 class ExchangeRateFragmentTest {
 
-    private val fragment = ExchangeRateFragment()
+    private val fragment =
+        ExchangeRateFragment()
 
     @get:Rule
     val fragmentRule = createRule(fragment)

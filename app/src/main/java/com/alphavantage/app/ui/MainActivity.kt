@@ -3,7 +3,7 @@ package com.alphavantage.app.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alphavantage.app.R
-import com.alphavantage.app.ui.forex.exchangerate.ExchangeRateFragment
+import com.alphavantage.app.ui.exchangerate.ExchangeRateFragment
 
 class MainActivity : AppCompatActivity() {
 

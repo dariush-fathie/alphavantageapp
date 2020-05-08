@@ -1,4 +1,4 @@
-package com.alphavantage.app.ui.forex.exchangerate
+package com.alphavantage.app.ui.exchangerate
 
 import androidx.lifecycle.*
 import com.alphavantage.app.domain.usecase.forex.CalculateExchangeRate

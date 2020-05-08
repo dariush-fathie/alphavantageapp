@@ -11,7 +11,7 @@ import com.alphavantage.app.domain.widget.DispatcherProvider
 import com.alphavantage.app.rule.CoroutinesTestRule
 import com.alphavantage.app.rule.runBlockingTest
 import com.alphavantage.app.testModules
-import com.alphavantage.app.ui.forex.exchangerate.ExchangeRateViewModel
+import com.alphavantage.app.ui.exchangerate.ExchangeRateViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
