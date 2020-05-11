@@ -106,7 +106,7 @@ dependencies {
 
     // JUnit Truth Assertions
     androidTestImplementation "androidx.test.ext:truth:$testVersion"
-    androidTestImplementation 'com.google.truth:truth:0.42'
+    androidTestImplementation 'com.google.truth:truth:1.0.1'
 
     // Mock Test
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
@@ -115,7 +115,7 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 
     // Instrumentation Tests
-    androidTestImplementation "org.hamcrest:hamcrest-library:1.3"
+    androidTestImplementation "org.hamcrest:hamcrest-library:2.2"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:2.2.0"
 

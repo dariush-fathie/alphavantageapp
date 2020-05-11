@@ -46,8 +46,7 @@ class CurrenciesRepositoryTest : KoinTest {
     @Test
     fun testLocal() {
         val res = runBlocking {
-            val parser = JsonParser()
-            val mockElement = parser.parse(mockCurrenciesJson)
+            val mockElement = JsonParser.parseString(mockCurrenciesJson)
             val mockResponse = Response.success(mockElement)
             val mockService = Mockito.mock(OpenApiService::class.java)
 
