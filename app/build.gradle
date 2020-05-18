@@ -69,6 +69,8 @@ dependencies {
     // AndroidX Lifecycle
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
     // Androidx Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"

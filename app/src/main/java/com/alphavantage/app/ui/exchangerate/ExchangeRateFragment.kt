@@ -23,7 +23,6 @@ class ExchangeRateFragment : Fragment() {
 
     private val viewModel: ExchangeRateViewModel by viewModel()
 
-    private var navController: NavController? = null
     private lateinit var binding: ExchangeRateFragmentBinding
 
     override fun onCreateView(
@@ -43,21 +42,13 @@ class ExchangeRateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
 
         binding.fromCurrencyLayout.setOnSafeClickListener {
-            viewModel.setGoToFromCurrenciesAction(R.id.action_exchangeRateFragment_to_currenciesFragment)
+            viewModel.setGoToFromCurrenciesAction()
         }
 
         binding.toCurrencyLayout.setOnSafeClickListener {
-            viewModel.setGoToToCurrenciesAction(R.id.action_exchangeRateFragment_to_currenciesFragment)
+            viewModel.setGoToToCurrenciesAction()
         }
-
-        viewModel.toFromCurrenciesEvent.observe(viewLifecycleOwner, EventObserver {
-            navController?.navigate(it)
-        })
-        viewModel.toToCurrenciesEvent.observe(viewLifecycleOwner, EventObserver {
-            navController?.navigate(it)
-        })
     }
 }

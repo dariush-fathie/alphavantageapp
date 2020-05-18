@@ -1,49 +1,45 @@
 package com.alphavantage.app.domain.usecase.forex
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.alphavantage.app.domain.model.Result
 import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.repository.forex.ForexRemoteRepository
 import com.alphavantage.app.domain.usecase.UseCase
 import com.alphavantage.app.domain.widget.DefaultDispatcherProvider
 import com.alphavantage.app.domain.widget.DispatcherProvider
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class CalculateExchangeRate(private val remote: ForexRemoteRepository) :
     UseCase() {
 
-    private var dataState = MutableLiveData<Result<Double>>()
-    val data: LiveData<Result<Double>> get() = dataState
-
     fun execute(
-        scope: CoroutineScope,
         fromCurrency: Currency?,
         toCurrency: Currency?,
         input: Double?,
         dispatcherProvider: DispatcherProvider = DefaultDispatcherProvider()
-    ) {
+    ): Flow<Result<Double?>> {
         if (fromCurrency == null) {
-            dataState.postValue(Result.error("Kurs asal kosong"))
-            return
+            return flow { emit(Result.error("Kurs asal kosong")) }
         }
 
         if (toCurrency == null) {
-            dataState.postValue(Result.error("Kurs tujuan kosong"))
-            return
+            return flow { emit(Result.error("Kurs tujuan kosong")) }
         }
 
         if (input == null) {
-            dataState.postValue(Result.error("Input kosong"))
-            return
+            return flow { emit(Result.error("Input kosong")) }
         }
 
-        retrieveNetwork(scope, {
+        return retrieveNetwork(
+            { remote.getExchangeRate(fromCurrency, toCurrency) },
+            dispatcherProvider
+        ).map {
             when (it.status) {
-                Result.Status.SUCCESS -> dataState.postValue(Result.success(it.data!!.rate * input))
-                Result.Status.ERROR -> dataState.postValue(Result.error(it.message!!))
-                Result.Status.LOADING -> dataState.postValue(Result.loading())
+                Result.Status.LOADING -> Result.loading()
+                Result.Status.SUCCESS -> Result.success(it.data!!.rate * input)
+                Result.Status.ERROR -> Result.error(it.message!!)
             }
-        }, { remote.getExchangeRate(fromCurrency, toCurrency) }, dispatcherProvider)
+        }
     }
 }

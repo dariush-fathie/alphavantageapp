@@ -1,3 +1,5 @@
+package com.alphavantage.app
+
 /*
  * Copyright (C) 2019 The Android Open Source Project
  *
@@ -14,9 +16,8 @@
  * limitations under the License.
  */
 
-package com.alphavantage.app.domain.util
-
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit

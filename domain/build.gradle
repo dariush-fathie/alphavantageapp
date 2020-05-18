@@ -46,8 +46,6 @@ dependencies {
     // Core packages
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     api "androidx.core:core-ktx:$coreVersion"
-    api "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
 

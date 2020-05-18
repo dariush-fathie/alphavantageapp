@@ -1,54 +1,58 @@
 package com.alphavantage.app.ui.exchangerate
 
 import androidx.lifecycle.*
+import com.alphavantage.app.domain.model.Result
+import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.usecase.forex.CalculateExchangeRate
-import com.alphavantage.app.domain.usecase.general.SelectCurrency
-import com.alphavantage.app.domain.widget.DefaultDispatcherProvider
 import com.alphavantage.app.domain.widget.DispatcherProvider
-import com.alphavantage.app.domain.widget.Event
+import com.alphavantage.app.nav.NavManager
+import kotlinx.coroutines.launch
 
 class ExchangeRateViewModel(
+    private val navManager: NavManager,
     private val calculateExchangeRate: CalculateExchangeRate,
-    private val selectCurrency: SelectCurrency,
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     // Variables
-    private var _fromCurrency = selectCurrency.fromCurrency
+    private val _fromCurrency = MutableLiveData<Currency>()
     val fromCurrency: LiveData<String?> get() = _fromCurrency.map { it.code }
 
-    private var _toCurrency = selectCurrency.toCurrency
+    private val _toCurrency = MutableLiveData<Currency>()
     val toCurrency: LiveData<String?> get() = _toCurrency.map { it.code }
 
     var input = MutableLiveData<String>()
 
-    private var _output = calculateExchangeRate.data
-    val output: LiveData<Double?> get() = _output.map { it.data }
-
-    // Events
-    private var _toFromCurrenciesEvent = MutableLiveData<Event<Int>>()
-    val toFromCurrenciesEvent: LiveData<Event<Int>> get() = _toFromCurrenciesEvent
-
-    private var _toToCurrenciesEvent = MutableLiveData<Event<Int>>()
-    val toToCurrenciesEvent: LiveData<Event<Int>> get() = _toToCurrenciesEvent
+    private val _output = MediatorLiveData<Result<Double?>>()
+    val output: LiveData<Double?> = _output.map { it.data }
 
     fun calculate() {
-        calculateExchangeRate.execute(
-            viewModelScope,
-            _fromCurrency.value,
-            _toCurrency.value,
-            input.value!!.toDoubleOrNull(),
-            dispatcherProvider
-        )
+        viewModelScope.launch {
+            val item = calculateExchangeRate.execute(
+                _fromCurrency.value,
+                _toCurrency.value,
+                input.value!!.toDoubleOrNull(),
+                dispatcherProvider
+            ).asLiveData(dispatcherProvider.io() + viewModelScope.coroutineContext)
+            _output.addSource(item) {
+                _output.postValue(it)
+            }
+        }
     }
 
-    fun setGoToFromCurrenciesAction(destination: Int) {
-        selectCurrency.state = SelectCurrency.SelectState.FROM
-        _toFromCurrenciesEvent.value = Event(destination)
+    fun setGoToFromCurrenciesAction() {
+        navManager.navigate(ExchangeRateFragmentDirections.actionExchangeRateFragmentToCurrenciesFragment())
     }
 
-    fun setGoToToCurrenciesAction(destination: Int) {
-        selectCurrency.state = SelectCurrency.SelectState.TO
-        _toToCurrenciesEvent.value = Event(destination)
+    fun setGoToToCurrenciesAction() {
+        navManager.navigate(ExchangeRateFragmentDirections.actionExchangeRateFragmentToCurrenciesFragment())
+    }
+
+    fun setFromCurrency(currency: Currency) {
+        _fromCurrency.postValue(currency)
+    }
+
+    fun setToCurrency(currency: Currency) {
+        _toCurrency.postValue(currency)
     }
 }

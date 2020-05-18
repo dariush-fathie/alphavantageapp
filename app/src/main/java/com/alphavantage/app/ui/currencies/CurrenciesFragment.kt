@@ -18,15 +18,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CurrenciesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = CurrenciesFragment()
-    }
-
     private lateinit var adapter: CurrenciesAdapter
     private lateinit var binding: CurrenciesFragmentBinding
 
     private val viewModel: CurrenciesViewModel by viewModel()
-    private var navController: NavController? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,13 +42,6 @@ class CurrenciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-
-        viewModel.toPreviousEvent.observe(viewLifecycleOwner,
-            EventObserver {
-                navController?.popBackStack()
-            })
-
         initializeList()
     }
 
@@ -65,6 +53,7 @@ class CurrenciesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvCurrencies.adapter = null
+        binding.rvCurrencies.removeAllViews()
     }
 
     private fun initializeList() {

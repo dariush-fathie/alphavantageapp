@@ -1,18 +1,12 @@
 package com.alphavantage.app.open
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import com.alphavantage.app.domain.model.Result
-import com.alphavantage.app.domain.util.getOrAwaitValue
-import com.alphavantage.app.domain.util.observeForTesting
-import com.alphavantage.app.domain.widget.DispatcherProvider
+import com.alphavantage.app.getOrAwaitValue
 import com.alphavantage.app.rule.CoroutinesTestRule
 import com.alphavantage.app.rule.runBlockingTest
 import com.alphavantage.app.testModules
 import com.alphavantage.app.ui.currencies.CurrenciesViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule

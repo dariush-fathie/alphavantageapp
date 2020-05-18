@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.alphavantage.app.data.di.dataModules
 import com.alphavantage.app.data.local.ObjectBox
+import com.alphavantage.app.di.uiModules
 import com.alphavantage.app.di.viewModelModules
 import com.alphavantage.app.domain.di.domainModules
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +22,7 @@ class AlphaVantageApp : MultiDexApplication() {
         ObjectBox.init(this)
         startKoin {
             androidContext(this@AlphaVantageApp)
-            modules(dataModules + domainModules + viewModelModules)
+            modules(dataModules + domainModules + uiModules + viewModelModules)
         }
     }
 
