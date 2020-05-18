@@ -6,8 +6,10 @@ import com.alphavantage.app.domain.model.general.Currency
 import com.alphavantage.app.domain.usecase.forex.CalculateExchangeRate
 import com.alphavantage.app.domain.widget.DispatcherProvider
 import com.alphavantage.app.nav.NavManager
+import com.alphavantage.app.ui.currencies.CurrenciesViewType
 import kotlinx.coroutines.launch
 
+// TODO NavArgs
 class ExchangeRateViewModel(
     private val navManager: NavManager,
     private val calculateExchangeRate: CalculateExchangeRate,
@@ -41,11 +43,19 @@ class ExchangeRateViewModel(
     }
 
     fun setGoToFromCurrenciesAction() {
-        navManager.navigate(ExchangeRateFragmentDirections.actionExchangeRateFragmentToCurrenciesFragment())
+        navManager.navigate(
+            ExchangeRateFragmentDirections.actionExchangeRateFragmentToCurrenciesFragment(
+                CurrenciesViewType.FROM
+            )
+        )
     }
 
     fun setGoToToCurrenciesAction() {
-        navManager.navigate(ExchangeRateFragmentDirections.actionExchangeRateFragmentToCurrenciesFragment())
+        navManager.navigate(
+            ExchangeRateFragmentDirections.actionExchangeRateFragmentToCurrenciesFragment(
+                CurrenciesViewType.TO
+            )
+        )
     }
 
     fun setFromCurrency(currency: Currency) {

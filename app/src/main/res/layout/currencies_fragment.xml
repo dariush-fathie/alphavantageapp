@@ -23,7 +23,8 @@
             android:layout_centerInParent="true"
             android:text="Loading"
             android:textSize="18sp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_currencies"
@@ -32,8 +33,9 @@
             android:minHeight="80dp"
             android:overScrollMode="never"
             android:scrollbars="none"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/currencies_item"
-            android:visibility="gone"/>
+            tools:visibility="visible" />
     </RelativeLayout>
 </layout>

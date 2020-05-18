@@ -18,6 +18,16 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit" />
+
+        <argument
+            android:name="from_currency"
+            app:argType="com.alphavantage.app.domain.model.general.Currency"
+            app:nullable="true" />
+
+        <argument
+            android:name="to_currency"
+            app:argType="com.alphavantage.app.domain.model.general.Currency"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -25,13 +35,19 @@
         android:name="com.alphavantage.app.ui.currencies.CurrenciesFragment"
         android:label="currencies_fragment"
         tools:layout="@layout/currencies_fragment">
+
         <action
             android:id="@+id/action_currenciesFragment_pop"
+            app:destination="@id/exchangeRateFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
-            app:popUpTo="@id/currenciesFragment"
+            app:popUpTo="@id/exchangeRateFragment"
             app:popUpToInclusive="true" />
+
+        <argument
+            android:name="view_type"
+            app:argType="com.alphavantage.app.ui.currencies.CurrenciesViewType" />
     </fragment>
 </navigation>

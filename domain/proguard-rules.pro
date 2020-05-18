@@ -52,6 +52,8 @@
 # platform version.  We know about them, and they are safe.
 -dontwarn android.support.**
 
+-keepnames class com.alphavantage.app.domain.model.general.Currency
+
 ##---------------Begin: proguard configuration for Coroutines  ----------
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
 -keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}

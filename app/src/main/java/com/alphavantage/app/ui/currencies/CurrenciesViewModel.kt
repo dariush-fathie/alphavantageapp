@@ -13,6 +13,7 @@ import com.alphavantage.app.nav.NavManager
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+// TODO NavArgs
 class CurrenciesViewModel(
     private val navManager: NavManager,
     private val fetchCurrencies: FetchCurrencies,
@@ -25,8 +26,8 @@ class CurrenciesViewModel(
     fun itemClick(item: Currency) {
         Timber.i(item.name)
 
-        // TODO add parameter to viewmodel
-        backToPrevious()
+        // TODO set right as null if from, and other way around
+        navManager.navigate(CurrenciesFragmentDirections.actionCurrenciesFragmentPop(item, item))
     }
 
     fun getItems() {
@@ -37,9 +38,5 @@ class CurrenciesViewModel(
                 _items.postValue(it)
             }
         }
-    }
-
-    private fun backToPrevious() {
-        navManager.navigate(CurrenciesFragmentDirections.actionCurrenciesFragmentPop())
     }
 }
